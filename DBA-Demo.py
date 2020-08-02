@@ -192,7 +192,7 @@ class SSCAT:
 
 if __name__ == '__main__':
 
-    # fit the read data
+    # fit the real data
     P = 4
     im = np.load('data/jasperRidge_R198.npy').reshape(100*100, 198).T
     edm = np.load('data/edm_extracted.npy').T
