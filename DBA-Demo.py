@@ -54,13 +54,13 @@ class SscatAE(nn.Module):
             nn.ReLU(),
         )
         self.SPATIAL_LEN = 40
-        self.fc_conv = nn.Sequential(
+        self.fc_conv = nn.Sequential(  # 空间信息进行全连接
             nn.Linear(128, 128),
             nn.Tanh(),
             nn.Linear(128, self.SPATIAL_LEN),
             nn.Tanh(),
         )
-        self.fc_band = nn.Sequential(
+        self.fc_band = nn.Sequential(  # 光谱信息进行全连接
             nn.Linear(L, 128),
             nn.Tanh(),
             nn.Linear(128, 100-self.SPATIAL_LEN),
@@ -73,6 +73,7 @@ class SscatAE(nn.Module):
             nn.Softmax(dim=1),
         )
         self.de_main = nn.Linear(P, L, bias=False)
+        self.param_init()
 
     def forward(self, x):
         line1 = self.conv(x)
@@ -84,6 +85,12 @@ class SscatAE(nn.Module):
         code = self.fc_cat(cat)
         output = self.de_main(code)
         return code, output
+
+    def param_init(self):
+        for name, param in self.named_parameters():
+            if len(param.shape) == 2:
+                stdv = 1.0 / param.shape[1] ** 0.5
+                torch.nn.init.uniform_(param, -stdv, stdv)
 
 
 class SSCAT:
