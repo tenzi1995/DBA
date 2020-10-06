@@ -1,4 +1,4 @@
-# Modle Capacity 
+# Model capacity 
 FLOPs: 1.23M
 
 Trainable parameters: 0.31M
