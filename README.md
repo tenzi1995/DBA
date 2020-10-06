@@ -1,3 +1,8 @@
+# Modle Capacity 
+FLOPs: 1.23M
+
+Trainable parameters: 0.31M
+
 # Qualitative results in terms of SNR 
 SNR=15
 
